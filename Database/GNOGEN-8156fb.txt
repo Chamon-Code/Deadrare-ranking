@@ -1,0 +1,9 @@
+{
+    "Emidas Genesis Act 1": 272,
+    "Emidas Genesis Act 2": 460,
+    "Emidas Genesis Act 3": 648,
+    "Emidas Genesis Act 4": 836,
+    "Emidas Genesis Act 5": 1024,
+    "Emidas Genesis Act 6": 1212,
+    "Emidas Genesis Act 7": 1400
+}

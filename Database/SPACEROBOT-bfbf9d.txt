@@ -1,0 +1,10 @@
+{
+    "RoboPackPH1": 1,
+    "RoboPackPH2": 2,
+    "PunkBotRunner2368": 3,
+    "GolBotWarrior": 4,
+    "ElrondWarBot": 5,
+    "DestroyerTS": 6,
+    "RoboCell": 7,
+    "JollyBot": 11
+}

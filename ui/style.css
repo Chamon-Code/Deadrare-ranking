@@ -1,0 +1,59 @@
+@font-face {
+    font-family: "Bebas Neue";
+    src: url("/../assets/BebasNeue-Regular.ttf") format("truetype")
+   }
+
+@font-face {
+font-family: "Roboto";
+src: url("/../assets/Roboto-Regular.ttf") format("truetype")
+}
+
+#deadrare {
+    width: 25px;
+}
+
+button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 5px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+#loadRank {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 5px;
+    margin: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+h1 {
+    font-family: "Bebas Neue";
+    text-align: center;
+}
+
+p {
+    font-family: "Roboto";
+    text-align: justify;
+    margin: 10px;
+}
+
+label {
+    display: block;
+    font: 1rem 'Bebas Neue', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}
+
+body{
+    width: 250px;
+}
