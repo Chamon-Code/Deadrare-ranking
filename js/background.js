@@ -1,4 +1,4 @@
-var matches = ["https://deadrare.io/collection/"]
+var matches = ["https://deadrare.io/collection/", "https://deadrare.io/my-collection"]
 
 
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
