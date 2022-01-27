@@ -8,44 +8,51 @@ var windUrl = window.location.href;
 var last = windUrl.split("/").at(-1);
 
 var intervalID;
-var intervalIDCollec;
 if(last == "my-collection") {
     clearInterval(intervalID);
     
-    intervalIDCollec = setInterval(callback, 1000);
-
-    function callback() {
-        var collecDiv = document.getElementsByClassName("sc-cbkKFq gPwQfB");
-        for(let i = 0; i < collecDiv.length; i++) {
-            var collecName = collecDiv[i].childNodes[0].childNodes[0].textContent;
-            if(collections.includes(collecName)) {
-                var nfts = collecDiv[i].childNodes[1].childNodes[0].childNodes;
-                for(let j = 0; j < nfts.length; j++) {
-                    console.log(nfts[j]);
-                    var rankArea = nfts[j].childNodes[0].childNodes[0].childNodes[1];
-                    var nftId;
-                    if(rankArea.childNodes[0].textContent.includes("#")) {
-                        nftId = rankArea.childNodes[0].textContent.split("#").at(-1);
-                    }
-                    else {
-                        nftId = rankArea.childNodes[0].textContent.split(" ").at(-1);
-                    }
-                    var res = getTextElement(collecName, nftId);
-                    res.then(tag => rankArea.childNodes[0].appendChild(tag));
+    var rankElements = [];
+    var collecDiv = document.getElementsByClassName("sc-cbkKFq gPwQfB");
+    for(let i = 0; i < collecDiv.length; i++) {
+        var collecName = collecDiv[i].childNodes[0].childNodes[0].textContent;
+        if(collections.includes(collecName)) {
+            var nfts = collecDiv[i].childNodes[1].childNodes[0].childNodes;
+            for(let j = 0; j < nfts.length; j++) {
+                var rankArea = nfts[j].childNodes[0].childNodes[0].childNodes[1];
+                var nftId;
+                if(rankArea.childNodes[0].textContent.includes("#")) {
+                    nftId = rankArea.childNodes[0].textContent.split("#").at(-1);
                 }
+                else {
+                    nftId = rankArea.childNodes[0].textContent.split(" ").at(-1);
+                }
+                var res = getTextElement(collecName, nftId);
+                res.then(tag => rankElements.push(tag));
             }
         }
-        clearInterval(intervalIDCollec);
+    }
+
+    
+    for(let i = 0; i < collecDiv.length; i++) {
+        var nfts = collecDiv[i].childNodes[1].childNodes[0].childNodes;
+        for(let j = 0; j < nfts.length; j++) {
+            var rankArea = nfts[j].childNodes[0].childNodes[0].childNodes[1];
+            rankArea.appendChild()
+        }
     }
     
 }
 else { 
-    clearInterval(intervalIDCollec);
     intervalID = setInterval(callback, 1000);
     
     function callback() {
     
-        var collecId = last;
+        var collecId;
+        if(last.includes("?")){
+            collecId = last.split("?")[0];
+        } else {
+            collecId = last;
+        }
     
         var path = '/Database/';
         path += collecId;
