@@ -2,7 +2,7 @@ var rankButton = document.getElementById("rank_button");
 rankButton.onclick = getAssociatedRanks;
 
 function getAssociatedRanks() {
-    var windUrl, collecId;
+    var windUrl, collecId, last;
     chrome.tabs.query({
         currentWindow: true, 
         active: true
@@ -10,7 +10,12 @@ function getAssociatedRanks() {
         
         for (let tab of tabs) {
             windUrl = tab.url;
-            collecId = windUrl.split("/").at(-1);
+            last = windUrl.split("/").at(-1);
+            if(last.includes("?")){
+                collecId = last.split("?")[0];
+            } else {
+                collecId = last;
+            }
         }
         extractDatas();
     });
@@ -55,7 +60,13 @@ function getAssociatedRanks() {
 
         alert(JSON.stringify(finalRes));
         var resultId = parseInt(finalRes["nftId"]);
-        var newUrl = windUrl.replace('collection', 'nft');
+        var newUrl;
+        if(windUrl.includes("?")){
+            var temp = windUrl.split("?")[0];
+            newUrl = temp.replace('collection', 'nft');
+        } else {
+            newUrl = windUrl.replace('collection', 'nft');
+        }
         window.open(newUrl + "-" + mapIdToHex[resultId].split("-").at(-1));
     }
 }
