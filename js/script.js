@@ -7,6 +7,7 @@ var collections = ["EAPES-8f3c1ft", "DRIFTERS-efd96c",
 var windUrl = window.location.href;
 var last = windUrl.split("/").at(-1);
 var intervalID;
+
 if(windUrl.includes("my-collection")) {
     clearInterval(intervalID);
     
@@ -34,14 +35,48 @@ if(windUrl.includes("my-collection")) {
                 else {
                     nftId = rankArea.childNodes[0].textContent.split(" ").at(-1);
                 }
+                /*
+                var path = '/Database/';
+                path += collecName;
+                path +='.txt';
+                const url = chrome.runtime.getURL(path);
+
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        for(let i = 0; i < collecDiv.length; i++) {
+                            var collecName = collecDiv[i].childNodes[0].childNodes[0].textContent;
+                            if(collections.includes(collecName)) {
+                                var nfts = collecDiv[i].childNodes[1].childNodes[0].childNodes;
+                                for(let j = 0; j < nfts.length; j++) {
+                                    var rankArea = nfts[j].childNodes[0].childNodes[0].childNodes[1];
+                                    var tag = document.createElement("p");
+                                    var rankId = parseInt(data[nftId]);
+                                    var nbOfNfts = parseInt(Object.keys(data).length);
+                                    var text = document.createTextNode("Rank : " + rankId);
+                                    if (rankId > nbOfNfts * 0.5) {
+                                        tag.style.color = "red";
+                                    }
+                                    else if(rankId > nbOfNfts * 0.25) {
+                                        tag.style.color = "orange";
+                                    }
+                                    else {
+                                        tag.style.color = "green";
+                                    }
+                    
+                                    tag.appendChild(text);
+                                    rankArea.appendChild(tag);
+                                }
+                            }
+                        }
+                    });*/
                 var res = getTextElement(collecName, nftId);
                 res.then(tag => {
                     rankElements[i + " " + j] = tag; 
-            });
+                });
             }
         }
     }
-
     setTimeout(() => {
         for(let i = 0; i < collecDiv.length; i++) {
             var collecName = collecDiv[i].childNodes[0].childNodes[0].textContent;
@@ -50,7 +85,7 @@ if(windUrl.includes("my-collection")) {
                 for(let j = 0; j < nfts.length; j++) {
                     var rankArea = nfts[j].childNodes[0].childNodes[0].childNodes[1];
                     var tag = document.createElement("p");
-                    var rankId = parseInt(rankElements[i + " " + j]["nftId"]);
+                    var rankId = parseInt(rankElements[i + " " + j]["id"]);
                     var nbOfNfts = parseInt(rankElements[i + " " + j]["nbOfNfts"]);
                     var text = document.createTextNode("Rank : " + rankId);
                     if (rankId > nbOfNfts * 0.5) {
@@ -77,46 +112,56 @@ else {
     
     function callback() {
     
-        var collecId;
+        var collecId, activity;
         if(last.includes("?")){
             collecId = last.split("?")[0];
+            if(last.split("?")[1] == "tab=activity") {
+                fetchNfts(collecId, "sc-btzYZH fYnxSZ", 1);
+            }
         } else {
             collecId = last;
+            fetchNfts(collecId, "sc-kGXeez gSAEQd", 0, false);
         }
     
-        var path = '/Database/';
-        path += collecId;
-        path +='.txt';
-    
-        const url = chrome.runtime.getURL(path);
-    
-        fetch(url)
-            .then((response) => response.json()) //assuming file contains json
-            .then((json) => {
-                var nbOfNfts = Object.keys(json).length;
-                var values = document.getElementsByClassName("sc-kGXeez gSAEQd");
-                Array.prototype.forEach.call(values, el => {
-                    if (el.childElementCount == 0) {
-                        var currentId = el.innerText.split("#").at(-1);
-                        var tag = document.createElement("p");
-                        if (parseInt(json[currentId]) > nbOfNfts * 0.5) {
-                            tag.style.color = "red";
-                        }
-                        else if(parseInt(json[currentId]) > nbOfNfts * 0.25) {
-                            tag.style.color = "orange";
-                        }
-                        else {
-                            tag.style.color = "green";
-                        }
-                        var text = document.createTextNode(" Rank : " + json[currentId]);
-                        
-                        tag.appendChild(text);
-                        el.appendChild(tag);
-                    }
-                });
-            });
     }
 
+}
+
+function fetchNfts(collecID, classDiv, childCOunt, margin = true) {
+    var path = '/Database/';
+    path += collecID;
+    path +='.txt';
+
+    const url = chrome.runtime.getURL(path);
+
+    fetch(url)
+        .then((response) => response.json()) //assuming file contains json
+        .then((json) => {
+            var nbOfNfts = Object.keys(json).length;
+            var values = document.getElementsByClassName(classDiv);
+            Array.prototype.forEach.call(values, el => {
+                if (el.childElementCount == childCOunt) {
+                    var currentId = el.innerText.split("#").at(-1);
+                    var tag = document.createElement("p");
+                    if (parseInt(json[currentId]) > nbOfNfts * 0.5) {
+                        tag.style.color = "red";
+                    }
+                    else if(parseInt(json[currentId]) > nbOfNfts * 0.25) {
+                        tag.style.color = "orange";
+                    }
+                    else {
+                        tag.style.color = "green";
+                    }
+                    if(margin) {
+                        tag.style.margin = "10px";
+                    }
+                    var text = document.createTextNode(" Rank : " + json[currentId]);
+                    
+                    tag.appendChild(text);
+                    el.appendChild(tag);
+                }
+            });
+        });
 }
 
 
@@ -130,6 +175,6 @@ function getTextElement(collecName, nftId) {
     return fetch(url)
         .then((response) => response.json()) //assuming file contains json
         .then((json) => {
-                return {"nftId" : json[nftId], "nbOfNfts" : Object.keys(json).length};
+                return {"id" : json[nftId], "nbOfNfts" : Object.keys(json).length};
             });
 }
