@@ -6,15 +6,16 @@ var collections = ["EAPES-8f3c1ft", "DRIFTERS-efd96c",
 "RAPTOR-28e21c"];
 var windUrl = window.location.href;
 var last = windUrl.split("/").at(-1);
-
 var intervalID;
 if(windUrl.includes("my-collection")) {
     clearInterval(intervalID);
     
-    var checkReload = document.getElementsByClassName("sc-cbkKFq gPwQfB");
-    if(checkReload.length == 0) {
-        setTimeout(() => {}, 1000);
-        window.location.reload();
+    if(!last.includes("?")){
+        var checkReload = document.getElementsByClassName("sc-cbkKFq gPwQfB");
+        if(checkReload.length == 0) {
+            setTimeout(() => {}, 1000);
+            window.location.reload();
+        }
     }
 
     var rankElements = {};
