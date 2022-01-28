@@ -115,19 +115,18 @@ else {
         var collecId, activity;
         if(last.includes("?")){
             collecId = last.split("?")[0];
-            if(last.split("?")[1] == "tab=activity") {
-                fetchNfts(collecId, "sc-btzYZH fYnxSZ", 1);
-            }
+            fetchNfts(collecId, ["sc-btzYZH fYnxSZ", "sc-kGXeez iHaJUD"], 1);
+            fetchNfts(collecId, ["sc-kGXeez gSAEQd", "sc-esjQYD ldZUdE", "sc-uJMKN dNBmzX"], 0, false);
         } else {
             collecId = last;
-            fetchNfts(collecId, "sc-kGXeez gSAEQd", 0, false);
+            fetchNfts(collecId, ["sc-kGXeez gSAEQd", "sc-esjQYD ldZUdE", "sc-uJMKN dNBmzX"], 0, false);
         }
     
     }
 
 }
 
-function fetchNfts(collecID, classDiv, childCOunt, margin = true) {
+function fetchNfts(collecID, classDiv, childCount, margin = true) {
     var path = '/Database/';
     path += collecID;
     path +='.txt';
@@ -138,9 +137,15 @@ function fetchNfts(collecID, classDiv, childCOunt, margin = true) {
         .then((response) => response.json()) //assuming file contains json
         .then((json) => {
             var nbOfNfts = Object.keys(json).length;
-            var values = document.getElementsByClassName(classDiv);
+            var values = []
+            for(let i=0; i<classDiv.length; i+=1) {
+                values = document.getElementsByClassName(classDiv[i]);
+                if(values.length > 0) {
+                    break;
+                }
+            }
             Array.prototype.forEach.call(values, el => {
-                if (el.childElementCount == childCOunt) {
+                if (el.childElementCount == childCount) {
                     var currentId = el.innerText.split("#").at(-1);
                     var tag = document.createElement("p");
                     if (parseInt(json[currentId]) > nbOfNfts * 0.5) {
@@ -154,11 +159,13 @@ function fetchNfts(collecID, classDiv, childCOunt, margin = true) {
                     }
                     if(margin) {
                         tag.style.margin = "10px";
+                        tag.style.fontSize = "18px";
                     }
-                    var text = document.createTextNode(" Rank : " + json[currentId]);
-                    
-                    tag.appendChild(text);
-                    el.appendChild(tag);
+                    if(json[currentId]) {
+                        var text = document.createTextNode(" Rank : " + json[currentId]);
+                        tag.appendChild(text);
+                        el.appendChild(tag);
+                    }
                 }
             });
         });
