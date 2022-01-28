@@ -11,8 +11,15 @@ var intervalID;
 if(windUrl.includes("my-collection")) {
     clearInterval(intervalID);
     
+    var checkReload = document.getElementsByClassName("sc-cbkKFq gPwQfB");
+    if(checkReload.length == 0) {
+        setTimeout(() => {}, 1000);
+        window.location.reload();
+    }
+
     var rankElements = {};
     var collecDiv = document.getElementsByClassName("sc-cbkKFq gPwQfB");
+    
     for(let i = 0; i < collecDiv.length; i++) {
         var collecName = collecDiv[i].childNodes[0].childNodes[0].textContent;
         if(collections.includes(collecName)) {
@@ -27,7 +34,9 @@ if(windUrl.includes("my-collection")) {
                     nftId = rankArea.childNodes[0].textContent.split(" ").at(-1);
                 }
                 var res = getTextElement(collecName, nftId);
-                res.then(tag => rankElements[i + " " + j] = tag);
+                res.then(tag => {
+                    rankElements[i + " " + j] = tag; 
+            });
             }
         }
     }
@@ -62,6 +71,7 @@ if(windUrl.includes("my-collection")) {
     
 }
 else { 
+
     intervalID = setInterval(callback, 1000);
     
     function callback() {
