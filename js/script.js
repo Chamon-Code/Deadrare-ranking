@@ -8,10 +8,10 @@ var windUrl = window.location.href;
 var last = windUrl.split("/").at(-1);
 
 var intervalID;
-if(last == "my-collection") {
+if(windUrl.includes("my-collection")) {
     clearInterval(intervalID);
     
-    var rankElements = [];
+    var rankElements = {};
     var collecDiv = document.getElementsByClassName("sc-cbkKFq gPwQfB");
     for(let i = 0; i < collecDiv.length; i++) {
         var collecName = collecDiv[i].childNodes[0].childNodes[0].textContent;
@@ -27,19 +27,38 @@ if(last == "my-collection") {
                     nftId = rankArea.childNodes[0].textContent.split(" ").at(-1);
                 }
                 var res = getTextElement(collecName, nftId);
-                res.then(tag => rankElements.push(tag));
+                res.then(tag => rankElements[i + " " + j] = tag);
             }
         }
     }
 
-    
-    for(let i = 0; i < collecDiv.length; i++) {
-        var nfts = collecDiv[i].childNodes[1].childNodes[0].childNodes;
-        for(let j = 0; j < nfts.length; j++) {
-            var rankArea = nfts[j].childNodes[0].childNodes[0].childNodes[1];
-            rankArea.appendChild()
+    setTimeout(() => {
+        for(let i = 0; i < collecDiv.length; i++) {
+            var collecName = collecDiv[i].childNodes[0].childNodes[0].textContent;
+            if(collections.includes(collecName)) {
+                var nfts = collecDiv[i].childNodes[1].childNodes[0].childNodes;
+                for(let j = 0; j < nfts.length; j++) {
+                    var rankArea = nfts[j].childNodes[0].childNodes[0].childNodes[1];
+                    var tag = document.createElement("p");
+                    var rankId = parseInt(rankElements[i + " " + j]["nftId"]);
+                    var nbOfNfts = parseInt(rankElements[i + " " + j]["nbOfNfts"]);
+                    var text = document.createTextNode("Rank : " + rankId);
+                    if (rankId > nbOfNfts * 0.5) {
+                        tag.style.color = "red";
+                    }
+                    else if(rankId > nbOfNfts * 0.25) {
+                        tag.style.color = "orange";
+                    }
+                    else {
+                        tag.style.color = "green";
+                    }
+
+                    tag.appendChild(text);
+                    rankArea.appendChild(tag);
+                }
+            }
         }
-    }
+    }, 1000);
     
 }
 else { 
@@ -63,22 +82,23 @@ else {
         fetch(url)
             .then((response) => response.json()) //assuming file contains json
             .then((json) => {
-                var nbOfNFTs = Object.keys(json).length;
+                var nbOfNfts = Object.keys(json).length;
                 var values = document.getElementsByClassName("sc-kGXeez gSAEQd");
                 Array.prototype.forEach.call(values, el => {
                     if (el.childElementCount == 0) {
                         var currentId = el.innerText.split("#").at(-1);
                         var tag = document.createElement("p");
-                        if (parseInt(json[currentId]) > nbOfNFTs * 0.5) {
+                        if (parseInt(json[currentId]) > nbOfNfts * 0.5) {
                             tag.style.color = "red";
                         }
-                        else if(parseInt(json[currentId]) > nbOfNFTs * 0.25) {
+                        else if(parseInt(json[currentId]) > nbOfNfts * 0.25) {
                             tag.style.color = "orange";
                         }
                         else {
                             tag.style.color = "green";
                         }
                         var text = document.createTextNode(" Rank : " + json[currentId]);
+                        
                         tag.appendChild(text);
                         el.appendChild(tag);
                     }
@@ -99,19 +119,6 @@ function getTextElement(collecName, nftId) {
     return fetch(url)
         .then((response) => response.json()) //assuming file contains json
         .then((json) => {
-            var nbOfNFTs = Object.keys(json).length;
-            var tag = document.createElement("p");
-                if (parseInt(json[nftId]) > nbOfNFTs * 0.5) {
-                    tag.style.color = "red";
-                }
-                else if(parseInt(json[nftId]) > nbOfNFTs * 0.25) {
-                    tag.style.color = "orange";
-                }
-                else {
-                    tag.style.color = "green";
-                }
-                var text = document.createTextNode(" Rank : " + json[nftId]);
-                tag.appendChild(text);
-                return tag;
+                return {"nftId" : json[nftId], "nbOfNfts" : Object.keys(json).length};
             });
 }
