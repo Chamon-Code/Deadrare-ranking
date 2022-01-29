@@ -4,29 +4,28 @@ var collections = ["EAPES-8f3c1ft", "DRIFTERS-efd96c",
 "QUACK-f01e02", "LIGHTNINGB-496265", "MANY-39af2c", 
 "GNOGEN-8156fb", "GNOGONS-73222b", "EGLDDIGGER-0f38cb",
 "RAPTOR-28e21c"];
+
+
 var windUrl = window.location.href;
 var last = windUrl.split("/").at(-1);
 var intervalID;
 
+console.log(windUrl);
+
 if(windUrl.includes("my-collection")) {
     clearInterval(intervalID);
     
-    if(!last.includes("?")){
-        var checkReload = document.getElementsByClassName("sc-cbkKFq gPwQfB");
-        if(checkReload.length == 0) {
-            setTimeout(() => {}, 1000);
-            window.location.reload();
-        }
-    }
-
     var rankElements = {};
+    // We get the collection div
     var collecDiv = document.getElementsByClassName("sc-cbkKFq gPwQfB");
-    
     for(let i = 0; i < collecDiv.length; i++) {
         var collecName = collecDiv[i].childNodes[0].childNodes[0].textContent;
+        // If the collection appears in the list of existing ones
         if(collections.includes(collecName)) {
+            // We get the nfts of the collection
             var nfts = collecDiv[i].childNodes[1].childNodes[0].childNodes;
             for(let j = 0; j < nfts.length; j++) {
+                // We get the area where the rank will be written
                 var rankArea = nfts[j].childNodes[0].childNodes[0].childNodes[1];
                 var nftId;
                 if(rankArea.childNodes[0].textContent.includes("#")) {
@@ -35,7 +34,6 @@ if(windUrl.includes("my-collection")) {
                 else {
                     nftId = rankArea.childNodes[0].textContent.split(" ").at(-1);
                 }
-                /*
                 var path = '/Database/';
                 path += collecName;
                 path +='.txt';
@@ -69,11 +67,11 @@ if(windUrl.includes("my-collection")) {
                                 }
                             }
                         }
-                    });*/
-                var res = getTextElement(collecName, nftId);
+                    });
+                /*var res = getTextElement(collecName, nftId);
                 res.then(tag => {
                     rankElements[i + " " + j] = tag; 
-                });
+                });*/
             }
         }
     }
@@ -112,14 +110,14 @@ else {
     
     function callback() {
     
-        var collecId, activity;
+        var collecId;
         if(last.includes("?")){
             collecId = last.split("?")[0];
             fetchNfts(collecId, ["sc-btzYZH fYnxSZ", "sc-kGXeez iHaJUD"], 1);
-            fetchNfts(collecId, ["sc-kGXeez gSAEQd", "sc-esjQYD ldZUdE", "sc-uJMKN dNBmzX"], 0, false);
+            fetchNfts(collecId, ["sc-kGXeez gSAEQd", "sc-esjQYD ldZUdE", "sc-uJMKN dNBmzX", "sc-bXGyLb dcrINh", "sc-cLQEGU pZPAK", "sc-hrWEMg uZwiD"], 0, false);
         } else {
             collecId = last;
-            fetchNfts(collecId, ["sc-kGXeez gSAEQd", "sc-esjQYD ldZUdE", "sc-uJMKN dNBmzX"], 0, false);
+            fetchNfts(collecId, ["sc-kGXeez gSAEQd", "sc-esjQYD ldZUdE", "sc-uJMKN dNBmzX", "sc-bXGyLb dcrINh", "sc-cLQEGU pZPAK", "sc-iQKALj btJFuk"], 0, false);
         }
     
     }
@@ -165,6 +163,15 @@ function fetchNfts(collecID, classDiv, childCount, margin = true) {
                         var text = document.createTextNode(" Rank : " + json[currentId]);
                         tag.appendChild(text);
                         el.appendChild(tag);
+                    }
+                }
+                else if (el.childElementCount > childCount && el.childNodes[childCount+1]){
+                    var currentId = el.childNodes[childCount].textContent.split("#").at(-1);
+                    var realRank = json[currentId];
+
+                    var oldRank = el.childNodes[childCount+1].innerText.split(" ").at(-1);
+                    if(oldRank != realRank) {
+                        el.childNodes[childCount+1].textContent = " Rank : " + realRank;
                     }
                 }
             });
