@@ -14,7 +14,7 @@ console.log(windUrl);
 
 if(windUrl.includes("my-collection")) {
     clearInterval(intervalID);
-    
+    /*
     var rankElements = {};
     // We get the collection div
     var collecDiv = document.getElementsByClassName("sc-cbkKFq gPwQfB");
@@ -72,7 +72,7 @@ if(windUrl.includes("my-collection")) {
                 res.then(tag => {
                     rankElements[i + " " + j] = tag; 
                 });*/
-            }
+   /*         }
         }
     }
     setTimeout(() => {
@@ -101,7 +101,7 @@ if(windUrl.includes("my-collection")) {
                 }
             }
         }
-    }, 1000);
+    }, 1000);*/
     
 }
 else { 
