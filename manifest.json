@@ -26,7 +26,8 @@
         ,"/Database/SPACEROBOT-bfbf9d.txt", "/Database/MONKSUP-421abc.txt", "/Database/VALIDATORS-e7e287.txt", 
         "/Database/QUACK-f01e02.txt", "/Database/LIGHTNINGB-496265.txt", "/Database/MANY-39af2c.txt", 
         "/Database/GNOGEN-8156fb.txt", "/Database/GNOGONS-73222b.txt",
-        "/Database/EGLDDIGGER-0f38cb.txt", "/Database/RAPTOR-28e21c.txt"],
+        "/Database/EGLDDIGGER-0f38cb.txt", "/Database/RAPTOR-28e21c.txt", "/Database/SRC-27d8ff.txt",
+        "/Database/LIONESS-dd909d.txt", "/Database/LIONS-d7a901.txt"],
           "matches": ["<all_urls>"]
         }
     ],
