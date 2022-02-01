@@ -3,7 +3,7 @@ var collections = ["EAPES-8f3c1ft", "DRIFTERS-efd96c",
 ,"SPACEROBOT-bfbf9d", "MONKSUP-421abc", "VALIDATORS-e7e287", 
 "QUACK-f01e02", "LIGHTNINGB-496265", "MANY-39af2c", 
 "GNOGEN-8156fb", "GNOGONS-73222b", "EGLDDIGGER-0f38cb",
-"RAPTOR-28e21c", "SRC-27d8ff"];
+"RAPTOR-28e21c", "SRC-27d8ff", "LIONESS-dd909d" , "LIONS-d7a901"];
 
 
 var windUrl = window.location.href;
