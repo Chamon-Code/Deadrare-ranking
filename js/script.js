@@ -114,10 +114,11 @@ else {
         if(last.includes("?")){
             collecId = last.split("?")[0];
             fetchNfts(collecId, ["sc-btzYZH fYnxSZ", "sc-kGXeez iHaJUD"], 1);
-            fetchNfts(collecId, ["sc-kGXeez gSAEQd", "sc-esjQYD ldZUdE", "sc-uJMKN dNBmzX", "sc-bXGyLb dcrINh", "sc-cLQEGU pZPAK", "sc-hrWEMg uZwiD"], 0, false);
-        } else {
+            fetchNfts(collecId, ["sc-kGXeez gSAEQd", "sc-esjQYD ldZUdE", "sc-bXGyLb dcrINh", "sc-cLQEGU pZPAK", "sc-hrWEMg uZwiD"], 0, false);
+        } 
+        else {
             collecId = last;
-            fetchNfts(collecId, ["sc-kGXeez gSAEQd", "sc-esjQYD ldZUdE", "sc-uJMKN dNBmzX", "sc-bXGyLb dcrINh", "sc-cLQEGU pZPAK", "sc-iQKALj btJFuk"], 0, false);
+            fetchNfts(collecId, ["sc-kGXeez gSAEQd", "sc-esjQYD ldZUdE", "sc-bXGyLb dcrINh", "sc-cLQEGU pZPAK", "sc-iQKALj btJFuk"], 0, false);
         }
     
     }
