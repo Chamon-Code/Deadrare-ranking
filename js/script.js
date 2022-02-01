@@ -3,7 +3,7 @@ var collections = ["EAPES-8f3c1ft", "DRIFTERS-efd96c",
 ,"SPACEROBOT-bfbf9d", "MONKSUP-421abc", "VALIDATORS-e7e287", 
 "QUACK-f01e02", "LIGHTNINGB-496265", "MANY-39af2c", 
 "GNOGEN-8156fb", "GNOGONS-73222b", "EGLDDIGGER-0f38cb",
-"RAPTOR-28e21c"];
+"RAPTOR-28e21c", "SRC-27d8ff"];
 
 
 var windUrl = window.location.href;
@@ -130,7 +130,7 @@ function fetchNfts(collecID, classDiv, childCount, margin = true) {
     path +='.txt';
 
     const url = chrome.runtime.getURL(path);
-
+    console.log(collecID);
     fetch(url)
         .then((response) => response.json()) //assuming file contains json
         .then((json) => {
