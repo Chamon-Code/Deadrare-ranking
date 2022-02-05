@@ -113,7 +113,7 @@ else {
         var collecId;
         if(last.includes("?")){
             collecId = last.split("?")[0];
-            fetchNfts(collecId, ["sc-btzYZH fYnxSZ", "sc-kGXeez iHaJUD"], 2);
+            fetchNfts(collecId, ["sc-btzYZH fYnxSZ", "sc-kGXeez iHaJUD"], 1);
             fetchNfts(collecId, ["sc-esjQYD kpnjyi", "sc-uJMKN iFRCnY", "sc-cpmLhU jUEedw"], 2, false);
         } 
         else {
