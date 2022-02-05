@@ -113,12 +113,12 @@ else {
         var collecId;
         if(last.includes("?")){
             collecId = last.split("?")[0];
-            fetchNfts(collecId, ["sc-btzYZH fYnxSZ", "sc-kGXeez iHaJUD"], 1);
-            fetchNfts(collecId, ["sc-kGXeez gSAEQd", "sc-esjQYD ldZUdE", "sc-bXGyLb dcrINh", "sc-cLQEGU pZPAK", "sc-hrWEMg uZwiD"], 0, false);
+            fetchNfts(collecId, ["sc-btzYZH fYnxSZ", "sc-kGXeez iHaJUD"], 2);
+            fetchNfts(collecId, ["sc-esjQYD kpnjyi", "sc-uJMKN iFRCnY", "sc-cpmLhU jUEedw"], 2, false);
         } 
         else {
             collecId = last;
-            fetchNfts(collecId, ["sc-kGXeez gSAEQd", "sc-esjQYD ldZUdE", "sc-bXGyLb dcrINh", "sc-cLQEGU pZPAK", "sc-iQKALj btJFuk"], 0, false);
+            fetchNfts(collecId, ["sc-esjQYD kpnjyi", "sc-uJMKN iFRCnY", "sc-cpmLhU jUEedw"], 2, false);
         }
     
     }
@@ -131,7 +131,6 @@ function fetchNfts(collecID, classDiv, childCount, margin = true) {
     path +='.txt';
 
     const url = chrome.runtime.getURL(path);
-    console.log(collecID);
     fetch(url)
         .then((response) => response.json()) //assuming file contains json
         .then((json) => {
@@ -145,7 +144,7 @@ function fetchNfts(collecID, classDiv, childCount, margin = true) {
             }
             Array.prototype.forEach.call(values, el => {
                 if (el.childElementCount == childCount) {
-                    var currentId = el.innerText.split("#").at(-1);
+                    var currentId = el.firstChild.innerText.split("#").at(-1);
                     var tag = document.createElement("p");
                     if (parseInt(json[currentId]) > nbOfNfts * 0.5) {
                         tag.style.color = "red";
@@ -167,12 +166,12 @@ function fetchNfts(collecID, classDiv, childCount, margin = true) {
                     }
                 }
                 else if (el.childElementCount > childCount && el.childNodes[childCount+1]){
-                    var currentId = el.childNodes[childCount].textContent.split("#").at(-1);
+                    var currentId = el.firstChild.textContent.split("#").at(-1);
                     var realRank = json[currentId];
 
-                    var oldRank = el.childNodes[childCount+1].innerText.split(" ").at(-1);
+                    var oldRank = el.childNodes[childCount].innerText.split(" ").at(-1);
                     if(oldRank != realRank) {
-                        el.childNodes[childCount+1].textContent = " Rank : " + realRank;
+                        el.childNodes[childCount].textContent = " Rank : " + realRank;
                     }
                 }
             });
